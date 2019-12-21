@@ -4,7 +4,20 @@
             <div class="img-product">
                 <img v-bind:src="product['photo']">
             </div>
-            <div>{{ product['name'] }}</div>
+            <ul>
+                <li><b>Nom :</b> {{ product['name'] }}</li>
+                <li><b>Marque :</b> {{ product['brand'] }}</li>
+                <li><b>Note :</b> {{ product['grade'] }} / 5</li>
+                <li><b>Code barre :</b> {{ product['bar_code'] }}</li>
+                <li><b>Ingredients :</b></li>
+                <li>
+                <ul>
+                  <li v-for='ingredient in product.ingredients' :key='index' class='ingredient'>
+                    -    {{ingredient['name']}} {{ingredient['proportion']}}
+                  </li>
+                </ul>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
@@ -17,10 +30,68 @@ export default{
     data: function(){
         return{
             products: [
-                {name: "Lipton Ice Tea", photo: "/img/lipton_icetea.jpg"},
-                {name: "Coca cola", photo: "/img/lipton_icetea.jpg"},
-                {name: "Fanta citron", photo: "/img/lipton_icetea.jpg"},
-                {name: "Jus de pomme", photo: "/img/lipton_icetea.jpg"}
+                {   
+                    name: "Lipton Ice Tea", 
+                    photo: "/img/lipton_icetea.jpg",
+                    bar_code : "3228886030011",
+                    brand : "Lipton" ,
+                    grade : "4",
+                    quantity : "50cl",
+                    ingredients : [{"name" : "eau",proportion : ""},
+                                   {"name" : "sucre",proportion : ""},
+                                   {"name" : "fructose",proportion : ""},
+                                   {"name" : "acidifiants",proportion : ""},
+                                   {"name" : "extrait de thé noir",proportion : "1,4g/l"},
+                                   {"name" : "jus de pêche à base de concentre",proportion : "0.1%"},
+                                   {"name" : "correcteur d'acidité",proportion : ""},
+                                   {"name" : "aromes",proportion : ""},
+                                   {"name" : "antioxydant",proportion : ""},
+                                   {"name" : "edulcorant",proportion : ""}]
+                    
+                 },
+                {
+                    name: "Coca cola",
+                    photo: "/img/coca_cola.jpg",
+                    bar_code : "5449000000286" ,
+                    brand : "The Coca-Cola Company" ,
+                    grade : "3.5",
+                    quantity : "1.5L" ,
+                    ingredients : [{"name" : "eau",proportion : ""},
+                                   {"name" : "sucre",proportion : ""},
+                                   {"name" : "acide carbonique",proportion : ""},
+                                   {"name" : "colorant caramel",proportion : ""},
+                                   {"name" : "acidifiant E338",proportion : ""},
+                                   {"name" : "aromes naturels",proportion : ""},
+                                   {"name" : "contient cafeine",proportion : ""}]
+                    
+                },
+                {
+                    name: "Fanta citron",
+                    photo: "/img/fanta.jpg",
+                    bar_code : "5000112631692"  ,
+                    brand : "The Coca-Cola Company" ,
+                    grade : "2",
+                    quantity : "1L",
+                    ingredients : [{"name" : "eau",proportion : ""},
+                                   {"name" : "sucre",proportion : ""},
+                                   {"name" : "jus de citron a base de concentre",proportion : "5%"},
+                                   {"name" : "antioxydant",proportion : ""},
+                                   {"name" : "acidifiant",proportion : ""},
+                                   {"name" : "conservateur",proportion : ""},
+                                   {"name" : "stabilisants",proportion : ""},
+                                   {"name" : "edulcorant",proportion : ""},
+                                   {"name" : "arome naturels de citron avec autres aromes naturels",proportion : ""},
+                                   {"name" : "colorant",proportion : ""}]
+                },
+                {
+                    name: "Jus de pomme",
+                    photo: "/img/jus_de_pomme.jpg",
+                    bar_code : "3564707080385",
+                    brand : "Carrefour" ,
+                    grade : "4.5",
+                    quantity : "1L",
+                    ingredients : [{"name" : "jus de pomme issu de l'agriculture biologique",proportion : "100%"}]
+                }
             ]
         }
     },
@@ -35,6 +106,12 @@ export default{
 </script>
 
 <style>
+
+@font-face {
+    font-family: "yuka";
+    src: url("./../assets/yuka.woff2") format("woff2");
+  }
+
 .products{
     display:flex;
     flex-direction:column;
@@ -51,6 +128,20 @@ export default{
 }
 
 .img-product img{
-    width:100%;
+    width:30%;
 }
+
+ul {
+list-style:none;
+margin-left:0;
+padding-left:0;
+}
+li {
+margin-bottom:15px;/* à adapter */
+}
+
+.ingredient {
+    margin-left: 30px;
+}
+
 </style>
