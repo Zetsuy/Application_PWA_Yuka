@@ -12,7 +12,7 @@
                 <li><b>Ingredients :</b></li>
                 <li>
                 <ul>
-                  <li v-for='ingredient in product.ingredients' :key='index' class='ingredient'>
+                  <li v-for='(ingredient,index) in product.ingredients' :key='index' class='ingredient'>
                     -    {{ingredient['name']}} {{ingredient['proportion']}}
                   </li>
                 </ul>
