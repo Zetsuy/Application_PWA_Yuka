@@ -1,33 +1,57 @@
 <template>
     <div class="products">
-        <div v-for='(product,index) in products' :key='index' class="product">
-            <div class="img-product">
-                <img v-bind:src="product['photo']">
+        <qrcode-stream @decode="onDecode"></qrcode-stream>
+        <qrcode-drop-zone></qrcode-drop-zone>
+        <qrcode-capture></qrcode-capture>
+        <div v-for='(product,i) in products' :key='i' class="product">
+            <div class = "products__infos">
+                
+                <div class = "products__name">{{product.name}}</div>
+                
             </div>
-            <ul>
-                <li><b>Nom :</b> {{ product['name'] }}</li>
-                <li><b>Marque :</b> {{ product['brand'] }}</li>
-                <li><b>Note :</b> {{ product['grade'] }} / 5</li>
-                <li><b>Code barre :</b> {{ product['bar_code'] }}</li>
-                <li><b>Ingredients :</b></li>
-                <li>
-                <ul>
-                  <li v-for='(ingredient,index) in product.ingredients' :key='index' class='ingredient'>
-                    -    {{ingredient['name']}} {{ingredient['proportion']}}
-                  </li>
-                </ul>
-                </li>
-            </ul>
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions,mapState } from 'vuex'
+
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader'
+
+
+  
 
 export default{
 
-    data: function(){
+   
+    mounted(){
+        this.fetchProducts()
+    },
+
+    components: {
+    QrcodeStream,
+    QrcodeDropZone,
+    QrcodeCapture
+    },
+    computed : mapState({
+        products: state => state.products
+    }),
+
+    methods: {
+       onDecode: function(result) {
+      const matchingProduct = this.products.find(
+        product => product.bar_code === result
+      )
+
+      this.$router.push({
+        path: matchingProduct ? `product/${matchingProduct._id}` : '404'
+      })
+    },
+        ...mapActions(['fetchProducts'])
+    }
+}
+
+ /* data: function(){
         return{
             products: [
                 {   
@@ -95,14 +119,7 @@ export default{
             ]
         }
     },
-    
-    mounted(){
-    },
-
-    methods: {
-        
-    }
-}
+    */
 </script>
 
 <style>
